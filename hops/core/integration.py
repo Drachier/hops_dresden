@@ -1145,13 +1145,18 @@ class HOPSSupervisor:
         self.actor: Type[HOPSActor]
         """The actor class that implements the actual integration."""
 
+        self.actor = self._actor_selector()
+
+    def _actor_selector(self) -> Type[HOPSActor]:
+        """
+        Selects the correct actor based on the HOPS configuration.
+        Can be subclassed to add new actors.
+        """
         if not self.params.HiP.nonlinear:
             log.info("Choosing the linear integrator.")
-            self.actor = LinearHOPSActor
-
-        else:
-            log.info("Choosing the nonlinear integrator.")
-            self.actor = NonLinearHOPSActor
+            return LinearHOPSActor
+        log.info("Choosing the nonlinear integrator.")
+        return NonLinearHOPSActor
 
     def __repr__(self):
         return f"HI({self.params}, {self.number_of_samples}, {self.min_sample_index})"
