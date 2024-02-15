@@ -1,9 +1,12 @@
 from __future__ import annotations
 from enum import Enum
 from numbers import Number
+from dataclasses import dataclass
 
 import binfootprint as bf
 from beartype import beartype
+
+from ..core.hierarchy_parameters import HIParams
 
 class MPSIntegrationMode(Enum):
     TDVP1SITE = "TDVP1"
@@ -104,3 +107,15 @@ class TEBDParameters(bf.ABCParameter):
         positivity_test(svd_relative_tolerance, "SVD relative tolerance")
         self.max_bond_dimension = max_bond_dimension
         self.svd_relative_tolerance = svd_relative_tolerance
+
+@beartype
+@dataclass
+class HIParamsWTensors(HIParams):
+    r"""
+    Enhances the container for the parameters of the hierarchy integrator with tensor network parameters.
+    """
+
+    __slots__ = ["TensP"]
+
+    TensP: bf.ABCParameter
+    """The parameters for the tensor network method."""
