@@ -1,5 +1,4 @@
 from __future__ import annotations
-from typing import Union
 from enum import Enum
 from numbers import Number
 
@@ -34,7 +33,7 @@ def generate_parameters(mode: MPSIntegrationMode, **kwargs) -> bf.ABCParameter:
     else:
         raise ValueError(f"Invalid mode {mode}.")
 
-def positivity_test(value: Number, custom_name: str = "number") -> bool:
+def positivity_test(value: Number, custom_name: str = "number"):
     r"""
     Tests if the given value is positive. If it is not, a value error is raised.
 
